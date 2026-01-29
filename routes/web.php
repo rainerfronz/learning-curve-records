@@ -2,18 +2,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReleaseController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ShowController;
 
-/*
-Kid version:
-These are the website pages people can visit.
-*/
+// Health check (keep this forever)
+Route::get('/health', fn () => 'OK');
 
-// Health check (used to confirm the app is alive)
-Route::get('/health', function () {
-    return 'OK';
-});
+// Real site routes
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Temporary home page test
-Route::get('/', function () {
-    return 'LCR is alive';
-});
+Route::get('/releases', [ReleaseController::class, 'index'])->name('releases.index');
+Route::get('/releases/{slug}', [ReleaseController::class, 'show'])->name('releases.show');
+
+Route::get('/artists', [ArtistController::class, 'index'])->name('artists.index');
+Route::get('/artists/{slug}', [ArtistController::class, 'show'])->name('artists.show');
+
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+
+Route::get('/shows', [ShowController::class, 'index'])->name('shows.index');
